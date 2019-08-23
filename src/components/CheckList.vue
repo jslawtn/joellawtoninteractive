@@ -2,17 +2,32 @@
  .task-marked{
    text-decoration: line-through;
  }
+
+ .check-list-container{
+    max-width: 500px;
+    border: 1px solid #c3c3c3;
+    border-radius: 15px;
+    box-shadow: 0px 0px 8px #c3c3c3;
+ }
+
+ .check-list-item{
+   border-bottom: 1px solid #c3c3c3;
+   padding: 0.5rem;
+   margin: 0.5rem 0 0.5rem 0;
+ }
 </style>
 
 <template>
   <div>
-    <div v-for="(item, index) in checklist" :key="index">
+    <div class="check-list-container">
+      <div class="check-list-item" v-for="(item, index) in checklist" :key="index">
         <input type="checkbox" :checked="item.checked" v-model="item.checked"/>
         <p :class="{'task-marked': item.checked === true}">{{item.description}}</p>
         <h6>{{formatDateTime(item.created)}}</h6>
+      </div>
+      <input type="input" placeholder="Add a task..." v-model="itemDescription" @keyup.enter="submit"/>
+      <button v-on:click="submit" :disabled="itemDescription === ''">Add</button>
     </div>
-    <input type="input" placeholder="Say Something..." v-model="itemDescription" @keyup.enter="submit"/>
-    <button v-on:click="submit" :disabled="itemDescription === ''">Add</button>
   </div>
 </template>
 
