@@ -1,6 +1,6 @@
 <style>
  .task-marked{
-   
+   text-decoration: line-through;
  }
 </style>
 
@@ -8,7 +8,7 @@
   <div>
     <div v-for="(item, index) in checklist" :key="index">
         <input type="checkbox" :checked="item.checked" v-model="item.checked"/>
-        <p>{{item.description}}</p>
+        <p :class="{'task-marked': item.checked === true}">{{item.description}}</p>
         <h6>{{formatDateTime(item.created)}}</h6>
     </div>
     <input type="input" placeholder="Say Something..." v-model="itemDescription" @keyup.enter="submit"/>
