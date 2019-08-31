@@ -1,13 +1,6 @@
-<style>
+<style scoped>
  .task-marked{
    text-decoration: line-through;
- }
-
- .check-list-container{
-    max-width: 500px;
-    border: 1px solid #c3c3c3;
-    border-radius: 15px;
-    box-shadow: 0px 0px 8px #c3c3c3;
  }
 
  .check-list-item{
@@ -15,18 +8,25 @@
    padding: 0.5rem;
    margin: 0.5rem 0 0.5rem 0;
  }
+
+ .inline-checkbox{
+   position: relative;
+   top:2px;
+ }
 </style>
 
 <template>
-  <div>
-    <div class="check-list-container">
-      <div class="check-list-item" v-for="(item, index) in checklist" :key="index">
-        <input type="checkbox" :checked="item.checked" v-model="item.checked"/>
-        <p :class="{'task-marked': item.checked === true}">{{item.description}}</p>
-        <h6>{{formatDateTime(item.created)}}</h6>
+  <div class="container">
+    <div>
+      <div v-for="(item, index) in checklist" :key="index">
+        <div class="d-flex justify-content-start">
+          <input class="vb mr-3" type="checkbox" v-model="item.checked" />
+          <h6 
+          :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
+        </div>
       </div>
-      <input type="input" placeholder="Add a task..." v-model="itemDescription" @keyup.enter="submit"/>
-      <button v-on:click="submit" :disabled="itemDescription === ''">Add</button>
+      <input v-model="itemDescription" /> 
+      <button v-on:click="submit">Add</button>
     </div>
   </div>
 </template>
@@ -37,6 +37,8 @@ import { formatDateTime } from '../services/dateTime.js';
 
 export default {
   name:'check-list',
+  components:{
+  },
   data(){
     return{
       itemDescription: '',
