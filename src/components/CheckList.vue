@@ -20,9 +20,8 @@
     <div>
       <div v-for="(item, index) in checklist" :key="index">
         <div class="d-flex justify-content-start">
-          <input class="vb mr-3" type="checkbox" v-model="item.checked" />
-          <h6 
-          :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
+          <input class="inline-checkbox mr-3" type="checkbox" v-model="item.checked" />
+          <h6 :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
         </div>
       </div>
       <input v-model="itemDescription" /> 
