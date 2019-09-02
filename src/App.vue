@@ -3,7 +3,6 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -11,7 +10,10 @@
 
 <template>
   <div id="app">
-    <checklist></checklist>
+    <div class="container">
+      <h5>Check List</h5>
+      <checklist></checklist>
+    </div>
   </div>
 </template>
 

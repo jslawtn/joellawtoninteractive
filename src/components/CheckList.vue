@@ -17,20 +17,18 @@
 </style>
 
 <template>
-  <div class="container">
-    <div>
-      <div class="row check-list-item" v-for="(item, index) in checklist" :key="index">
-        <div class="col d-flex justify-content-start">
-          <input class="inline-checkbox mr-3" type="checkbox" v-model="item.checked" />
-          <h6 :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
-        </div>
-        <div class="col d-flex justify-content-end">
-          <button class="btn p-0" v-on:click="removeTask(index)"><i class="fa fa-remove"></i></button>
-        </div>
+  <div>
+    <div class="row check-list-item" v-for="(item, index) in checklist" :key="index">
+      <div class="col d-flex justify-content-start">
+        <input class="inline-checkbox mr-3" type="checkbox" v-model="item.checked" />
+        <h6 class="trans-05" :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
       </div>
-      <input v-model="itemDescription" /> 
-      <button v-on:click="submit">Add</button>
+      <div class="col d-flex justify-content-end">
+        <button class="btn p-0" v-on:click="removeTask(index)"><i class="fa fa-remove"></i></button>
+      </div>
     </div>
+    <input class="input-box" v-model="itemDescription" /> 
+    <button v-on:click="submit">Add</button>
   </div>
 </template>
 
