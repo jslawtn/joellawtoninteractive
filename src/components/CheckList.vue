@@ -1,27 +1,34 @@
 <style scoped>
- .task-marked{
-   text-decoration: line-through;
- }
+.box{
+  border: 1px solid black;
+}
 
- .check-list-item{
-   border-bottom: 1px solid #c3c3c3;
-   padding: 0.5rem;
-   margin: 0.5rem 0 0.5rem 0;
- }
+.task-marked{
+  text-decoration: line-through;
+}
 
- .inline-checkbox{
-   position: relative;
-   top:2px;
- }
+.check-list-item{
+  border-bottom: 1px solid #c3c3c3;
+  padding: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+.inline-checkbox{
+  position: relative;
+  top:2px;
+}
 </style>
 
 <template>
-  <div class="container">
+  <div class="container box">
     <div>
-      <div v-for="(item, index) in checklist" :key="index">
-        <div class="d-flex justify-content-start">
+      <div class="row mb-2" v-for="(item, index) in checklist" :key="index">
+        <div class="col d-flex justify-content-start">
           <input class="inline-checkbox mr-3" type="checkbox" v-model="item.checked" />
           <h6 :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <button class="btn p-0" v-on:click="removeTask(index)"><i class="fa fa-remove"></i></button>
         </div>
       </div>
       <input v-model="itemDescription" /> 
@@ -62,6 +69,9 @@ export default {
 
       this.checklist.push(checklistItem);
       this.itemDescription = '';
+    },
+    removeTask(index){
+      this.checklist.splice(index, 1);
     }
   },
   watch:{
