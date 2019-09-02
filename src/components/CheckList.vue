@@ -1,16 +1,13 @@
 <style scoped>
-.box{
-  border: 1px solid black;
-}
-
 .task-marked{
-  text-decoration: line-through;
+  color: #c3c3c3;
 }
 
 .check-list-item{
-  border-bottom: 1px solid #c3c3c3;
-  padding: 0.5rem;
-  margin: 0.5rem 0 0.5rem 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  padding: 1rem;
 }
 
 .inline-checkbox{
@@ -20,9 +17,9 @@
 </style>
 
 <template>
-  <div class="container box">
+  <div class="container">
     <div>
-      <div class="row mb-2" v-for="(item, index) in checklist" :key="index">
+      <div class="row check-list-item" v-for="(item, index) in checklist" :key="index">
         <div class="col d-flex justify-content-start">
           <input class="inline-checkbox mr-3" type="checkbox" v-model="item.checked" />
           <h6 :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
