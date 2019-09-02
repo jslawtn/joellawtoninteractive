@@ -30,7 +30,7 @@
         </b-popover>
       </div>
     </div>
-    <input class="input-box" v-model="itemDescription" /> 
+    <input class="input-box" @keyup.enter="submit" v-model="itemDescription" /> 
     <button v-on:click="submit">Add</button>
   </div>
 </template>
