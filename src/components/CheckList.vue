@@ -24,7 +24,10 @@
         <h6 class="trans-05" :class="{'task-marked': item.checked === true}">{{item.description}}</h6>
       </div>
       <div class="col d-flex justify-content-end">
-        <button class="btn p-0" v-on:click="removeTask(index)"><i class="fa fa-remove"></i></button>
+        <button :id="`edit-btn-${index}`" class="btn p-0"><i class="	fa fa-ellipsis-h"></i></button>
+        <b-popover :target="`edit-btn-${index}`" triggers="focus">
+          <button class="btn" v-on:click="removeTask(inex)">Delete</button>
+        </b-popover>
       </div>
     </div>
     <input class="input-box" v-model="itemDescription" /> 
