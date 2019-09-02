@@ -26,7 +26,7 @@
       <div class="col d-flex justify-content-end">
         <button :id="`edit-btn-${index}`" class="btn p-0"><i class="	fa fa-ellipsis-h"></i></button>
         <b-popover :target="`edit-btn-${index}`" triggers="focus">
-          <button class="btn" v-on:click="removeTask(inex)">Delete</button>
+          <button class="btn" v-on:click="removeTask(index)">Remove</button>
         </b-popover>
       </div>
     </div>
