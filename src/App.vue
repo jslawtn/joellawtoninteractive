@@ -11,18 +11,21 @@
 <template>
   <div id="app">
     <div class="container">
-      <h5>Check List</h5>
-      <checklist></checklist>
+      <!-- <h5>Check List</h5>
+      <checklist></checklist> -->
+      <grid></grid>
     </div>
   </div>
 </template>
 
 <script>
 import checklist from './components/CheckList.vue';
+import grid from './components/Grid.vue';
 export default {
   name: 'app',
   components: {
-    checklist
+    //checklist,
+    grid
   }
 }
 </script>
