@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import checklist from './components/CheckList.vue';
+//import checklist from './components/CheckList.vue';
 import grid from './components/Grid.vue';
 export default {
   name: 'app',

@@ -1,4 +1,20 @@
 <style>
+.game-container{
+    position: relative;
+    max-width: 500px;
+    margin: auto;
+}
+
+.game-header{
+    min-height: 80px;
+    text-align: center;
+}  
+
+.grid-container{
+    margin: auto;
+    width:fit-content;
+}
+
 .grid{
     display: inline-grid;
     grid-template-columns: auto auto auto;
@@ -11,8 +27,8 @@
 }
 
 .node{
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-color:cadetblue;
 }
 
@@ -26,16 +42,19 @@
 </style>
 
 <template>
-    <div>
-        <div v-if="gameComplete === true">
-            <h5>{{victoryText}}</h5>
+    <div class="game-container">
+        <div class="game-header">
+            <h3>Noughts and Crosses</h3>
+            <h5 v-if="gameComplete === true">{{victoryText}}</h5>
         </div>
-        <div class="grid">
-            <div v-for="(node, index) in nodes" :key="index">
-                <button class="node btn-node" v-on:click="playerSelect(node)"
-                :class="{'node-player': node.playerId === 0, 'node-ai': node.playerId === 1}"
-                :disabled="node.active === true || gameComplete === true">
-                </button>
+        <div class="grid-container">
+            <div class="grid">
+                <div v-for="(node, index) in nodes" :key="index">
+                    <button class="node btn-node" v-on:click="playerSelect(node)"
+                    :class="{'node-player': node.playerId === 0, 'node-ai': node.playerId === 1}"
+                    :disabled="node.active === true || gameComplete === true">
+                    </button>
+                </div>
             </div>
         </div>
         <div v-if="gameComplete === true">
