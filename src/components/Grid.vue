@@ -45,7 +45,7 @@
     <div class="game-container">
         <div class="game-header">
             <h3>Noughts and Crosses</h3>
-            <h5 v-if="gameComplete === true">{{victoryText}}</h5>
+            <h6 v-if="gameComplete === true">{{victoryText}}</h6>
         </div>
         <div class="grid-container">
             <div class="grid">
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div v-if="gameComplete === true">
-            <button v-on:click="restartGame()">Restart</button>
+            <button class="btn" v-on:click="restartGame()">Restart</button>
         </div>
     </div>
 </template>
@@ -103,7 +103,7 @@ export default {
             selectedNode.playerId = 0;
 
             if(this.checkGrid(selectedNode) === true){
-                this.victoryText = "Player Won!";
+                this.victoryText = "PLAYER WON";
                 this.gameComplete = true;
             }else{
                 this.aiSelect();
@@ -122,7 +122,7 @@ export default {
             nonActiveNodes[randomIndex].playerId = 1;
 
             if(this.checkGrid(nonActiveNodes[randomIndex]) === true){
-                this.victoryText = "Computer Won!";
+                this.victoryText = "COMPUTER WON";
                 this.gameComplete = true;
             }
         },
