@@ -51,8 +51,8 @@
             <div class="grid">
                 <div v-for="(node, index) in nodes" :key="index">
                     <button class="node btn-node" v-on:click="playerSelect(node)"
-                    :class="{'node-player': node.playerId === 0, 'node-ai': node.playerId === 1}"
-                    :disabled="node.active === true || gameComplete === true">
+                    :class="{'node-player': node.playerId === -1, 'node-ai': node.playerId === 1}"
+                    :disabled="node.playerId !== 0 || gameComplete === true">
                     </button>
                 </div>
             </div>
@@ -77,13 +77,13 @@ export default {
         }
     },
     mounted: function(){
+        // Create Board
         for(var x = 0; x < this.grid.horizontalNodes; x++){
             for(var y = 0; y < this.grid.verticalNodes; y++){
                 const node = {
                     x: x,
                     y: y,
-                    active: false,
-                    playerId: undefined
+                    playerId: 0
                 }
                 this.nodes.push(node);
             }
@@ -91,18 +91,14 @@ export default {
     },
     methods:{
         restartGame(){
-            this.nodes.forEach(x => {
-                x.active = false;
-                x.playerId = undefined;
-            });
+            this.nodes.forEach(x => { x.playerId = 0; });
             this.gameComplete = false;
         },
         playerSelect(node){
             var selectedNode = this.nodes.find(x => x === node);
-            selectedNode.active = true;
-            selectedNode.playerId = 0;
+            selectedNode.playerId = -1;
 
-            if(this.checkGrid(selectedNode) === true){
+            if(this.checkGrid(selectedNode, this.nodes) === true){
                 this.victoryText = "PLAYER WON";
                 this.gameComplete = true;
             }else{
@@ -110,40 +106,65 @@ export default {
             }
         },
         aiSelect(){
-            var nonActiveNodes = this.nodes.filter(x => {
-                return x.active === false;
-            });
+            var node = this.minMax();
 
-            const maxIndex = nonActiveNodes.length;
+            node.playerId = 1;
 
-            const randomIndex = Math.floor(Math.random() * Math.floor(maxIndex));
-
-            nonActiveNodes[randomIndex].active = true;
-            nonActiveNodes[randomIndex].playerId = 1;
-
-            if(this.checkGrid(nonActiveNodes[randomIndex]) === true){
+            if(this.checkGrid(node, this.nodes) === true){
                 this.victoryText = "COMPUTER WON";
                 this.gameComplete = true;
             }
         },
-        checkGrid(node){
+        minMax(){
+            for(var i = 0; i < this.nodes.length; i ++){
+                if(this.nodes[i].playerId === 0){
+                    let nodeCopy = {
+                        x: this.nodes[i].x,
+                        y: this.nodes[i].y,
+                        playerId: 1
+                    }
+                    let gridCopy = JSON.parse(JSON.stringify(this.nodes));
+
+                    gridCopy[i] = nodeCopy;
+
+                    if(this.checkGrid(nodeCopy, gridCopy) === true){
+                        return this.nodes[i];
+                    }
+                }
+
+                if(this.nodes[i].playerId === 0){
+                    let nodeCopy = {
+                        x: this.nodes[i].x,
+                        y: this.nodes[i].y,
+                        playerId: -1
+                    }
+                    let gridCopy = JSON.parse(JSON.stringify(this.nodes));
+
+                    gridCopy[i] = nodeCopy;
+
+                    if(this.checkGrid(nodeCopy, gridCopy) === true){
+                        return this.nodes[i];
+                    }
+                }
+            }
+
+            return this.randomNeutralNode();
+        },
+        checkGrid(node, grid){
             var horizontalPoint = 0;
             var verticalPoint = 0;
             var linearPoint1 = 0;
             var linearPoint2 = 0;
-
-            for(var i = 0; i < this.nodes.length; i++){
-                
-                if(this.nodes[i].playerId === node.playerId){
-                    if(this.nodes[i].x === node.x){
+            for(var i = 0; i < grid.length; i++){
+                if(grid[i].playerId === node.playerId){
+                    if(grid[i].x === node.x){                        
                         horizontalPoint++;
-
                         if(horizontalPoint === 3){
                             return true; // win
                         }
                     }
                 
-                    if(this.nodes[i].y === node.y){
+                    if(grid[i].y === node.y){
                         verticalPoint++;
 
                         if(verticalPoint === 3){
@@ -151,7 +172,7 @@ export default {
                         }
                     }
 
-                    if(this.nodes[i].x === this.nodes[i].y){
+                    if(grid[i].x === grid[i].y){
                         linearPoint1++;
 
                         if(linearPoint1 === 3){
@@ -159,7 +180,7 @@ export default {
                         }
                     }
 
-                    if(this.nodes[i].y === (-1 * this.nodes[i].x) + 2){
+                    if(grid[i].y === (-1 * grid[i].x) + 2){
                         linearPoint2++;
 
                         if(linearPoint2 === 3){
@@ -169,6 +190,16 @@ export default {
                 }
             }
             return false;
+        },
+        randomNeutralNode(){
+            var neutralNodes = this.nodes.filter(x => {
+                return x.playerId === 0;
+            });
+
+            const maxIndex = neutralNodes.length;
+            const randomIndex = Math.floor(Math.random() * Math.floor(maxIndex));
+
+            return neutralNodes[randomIndex];
         }
     }
 }
