@@ -13,19 +13,19 @@
     <div class="container">
       <!-- <h5>Check List</h5>
       <checklist></checklist> -->
-      <grid></grid>
+      <TicTacToe></TicTacToe>
     </div>
   </div>
 </template>
 
 <script>
 //import checklist from './components/CheckList.vue';
-import grid from './components/Grid.vue';
+import TicTacToe from './components/TicTacToe.vue';
 export default {
   name: 'app',
   components: {
     //checklist,
-    grid
+    TicTacToe
   }
 }
 </script>

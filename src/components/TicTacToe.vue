@@ -70,6 +70,7 @@
 
 <script>
 export default {
+    name: 'ticTacToe',
     data(){
         return{
             grid:{
@@ -112,11 +113,16 @@ export default {
         },
         aiSelect(){
             var node = this.minMax();
-
-            node.playerId = 1;
-
-            if(this.checkGrid(node, this.nodes) === true){
-                this.victoryText = "COMPUTER WON";
+            
+            if(node){
+                node.playerId = 1;
+                if(this.checkGrid(node, this.nodes) === true){
+                    this.victoryText = "COMPUTER WON";
+                    this.gameComplete = true;
+                }
+            }
+            else{
+                this.victoryText = "DRAW";
                 this.gameComplete = true;
             }
         },
