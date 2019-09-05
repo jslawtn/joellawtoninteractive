@@ -30,6 +30,11 @@
     width: 60px;
     height: 60px;
     background-color:cadetblue;
+    transition: 1s;
+}
+
+.node-active{
+    transform: rotateY(180deg);
 }
 
 .node-player{
@@ -44,20 +49,20 @@
 <template>
     <div class="game-container">
         <div class="game-header">
-            <h3>Noughts and Crosses</h3>
+            <h3>Tic Tac Toe</h3>
             <h6 v-if="gameComplete === true">{{victoryText}}</h6>
         </div>
         <div class="grid-container">
             <div class="grid">
                 <div v-for="(node, index) in nodes" :key="index">
                     <button class="node btn-node" v-on:click="playerSelect(node)"
-                    :class="{'node-player': node.playerId === -1, 'node-ai': node.playerId === 1}"
+                    :class="{'node-player node-active': node.playerId === -1, 'node-ai node-active': node.playerId === 1}"
                     :disabled="node.playerId !== 0 || gameComplete === true">
                     </button>
                 </div>
             </div>
         </div>
-        <div v-if="gameComplete === true">
+        <div class="grid-container" v-if="gameComplete === true">
             <button class="btn" v-on:click="restartGame()">Restart</button>
         </div>
     </div>
