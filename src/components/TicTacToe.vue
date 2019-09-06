@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .game-container{
     position: relative;
     max-width: 500px;

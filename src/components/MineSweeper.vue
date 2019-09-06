@@ -1,16 +1,21 @@
-<style>
+<style scoped>
 #game-view{
     height: 500px;
     width: 500px;
     border: 1px solid black;
 }
-</style>
 
+.tile{
+    width: 8px;
+    height: 8px;
+    background-color: azure;
+    border: 1px solid #c3c3c3;
+}
+</style>
 
 <template>
     <div>
-        <div v-for="(node, index) in nodes" :key="index">
-
+        <div class="tile" v-for="(node, index) in nodes" :key="index">
         </div>
     </div>
 </template>
@@ -39,6 +44,7 @@ export default {
                     const node = {
                         x: x,
                         y: y,
+                        bombCount: 0,
                         flagged: false,
                         isBomb: false,
                         active: false
@@ -47,6 +53,28 @@ export default {
                     this.nodes.push(node);
                 }
             }
+
+            this.generateBombs();
+        },
+        generateBombs(){
+            const totalNodes = this.gameBoard.width * this.gameBoard.height;
+            const numberOfBombs = 35;
+
+            var array = Array.from(Array(totalNodes).keys());
+
+            for(var i = 0; i < numberOfBombs; i++){
+                const randomIndex = this.randomRange(0, array.length);
+                
+                this.nodes[array[randomIndex]].isBomb = true;
+                array.splice(randomIndex, 1);
+
+                console.log(array.length);
+            }
+        },
+        randomRange(min, max){
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     }
 }
