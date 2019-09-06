@@ -16,7 +16,7 @@
 }
 
 .grid{
-    display: inline-grid;
+    display: grid;
     grid-template-columns: auto auto auto;
     grid-column-gap: 5px;
     grid-row-gap: 5px;
@@ -31,6 +31,10 @@
     height: 60px;
     background-color:cadetblue;
     transition: 1s;
+}
+
+.node i{
+    color: white;
 }
 
 .node-active{
@@ -54,12 +58,11 @@
         </div>
         <div class="grid-container">
             <div class="grid">
-                <div v-for="(node, index) in nodes" :key="index">
-                    <button class="node btn-node" v-on:click="playerSelect(node)"
-                    :class="{'node-player node-active': node.playerId === -1, 'node-ai node-active': node.playerId === 1}"
-                    :disabled="node.playerId !== 0 || gameComplete === true">
-                    </button>
-                </div>
+                <button class="node btn-node" v-for="(node, index) in nodes" :key="index" v-on:click="playerSelect(node)"
+                :class="{'node-player node-active': node.playerId === -1, 'node-ai node-active': node.playerId === 1}"
+                :disabled="node.playerId !== 0 || gameComplete === true">
+                    <i :class="node.icon"></i>
+                </button>
             </div>
         </div>
         <div class="grid-container" v-if="gameComplete === true">
@@ -89,7 +92,8 @@ export default {
                 const node = {
                     x: x,
                     y: y,
-                    playerId: 0
+                    playerId: 0,
+                    icon: ''
                 }
                 this.nodes.push(node);
             }
@@ -97,12 +101,13 @@ export default {
     },
     methods:{
         restartGame(){
-            this.nodes.forEach(x => { x.playerId = 0; });
+            this.nodes.forEach(x => { x.playerId = 0; x.icon = ''; });
             this.gameComplete = false;
         },
         playerSelect(node){
             var selectedNode = this.nodes.find(x => x === node);
             selectedNode.playerId = -1;
+            selectedNode.icon = "fa fa-times";
 
             if(this.checkGrid(selectedNode, this.nodes) === true){
                 this.victoryText = "PLAYER WON";
@@ -116,6 +121,7 @@ export default {
             
             if(node){
                 node.playerId = 1;
+                node.icon = "fa fa-circle-o";
                 if(this.checkGrid(node, this.nodes) === true){
                     this.victoryText = "COMPUTER WON";
                     this.gameComplete = true;
