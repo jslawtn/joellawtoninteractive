@@ -11,21 +11,20 @@
 <template>
   <div id="app">
     <div class="container">
-      <!-- <h5>Check List</h5>
-      <checklist></checklist> -->
-      <TicTacToe></TicTacToe>
+      <!-- <TicTacToe></TicTacToe> -->
+      <MineSweeper></MineSweeper>
     </div>
   </div>
 </template>
 
 <script>
-//import checklist from './components/CheckList.vue';
 import TicTacToe from './components/TicTacToe.vue';
+import MineSweeper from './components/MineSweeper.vue';
 export default {
   name: 'app',
   components: {
-    //checklist,
-    TicTacToe
+    TicTacToe,
+    MineSweeper
   }
 }
 </script>
