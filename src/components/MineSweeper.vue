@@ -63,12 +63,10 @@ export default {
             var array = Array.from(Array(totalNodes).keys());
 
             for(var i = 0; i < numberOfBombs; i++){
-                const randomIndex = this.randomRange(0, array.length);
+                const randomIndex = this.randomRange(0, array.length - 1);
                 
                 this.nodes[array[randomIndex]].isBomb = true;
                 array.splice(randomIndex, 1);
-
-                console.log(`Bomb No: ${1} \nRandomIndex: ${randomIndex} \nIndex: ${array[randomIndex]}`);
             }
         },
         randomRange(min, max){
