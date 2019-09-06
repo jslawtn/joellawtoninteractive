@@ -68,7 +68,7 @@ export default {
                 this.nodes[array[randomIndex]].isBomb = true;
                 array.splice(randomIndex, 1);
 
-                console.log(array.length);
+                console.log(`Bomb No: ${1} \nRandomIndex: ${randomIndex} \nIndex: ${array[randomIndex]}`);
             }
         },
         randomRange(min, max){
