@@ -5,17 +5,30 @@
     border: 1px solid black;
 }
 
-.tile{
-    width: 8px;
-    height: 8px;
+.grid{
+    display: grid;
+    max-width: fit-content;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    grid-column-gap: 3px;
+    grid-row-gap: 3px;
+}
+
+.grid-item{
+    width: 40px;
+    height: 40px;
     background-color: azure;
     border: 1px solid #c3c3c3;
+}
+
+.bomb{
+    background-color: red;
 }
 </style>
 
 <template>
-    <div>
-        <div class="tile" v-for="(node, index) in nodes" :key="index">
+    <div class="grid">
+        <div :class="{bomb: node.isBomb === true}" class="grid-item" v-for="(node, index) in nodes" :key="index">
+            {{node.x}}, {{node.y}}
         </div>
     </div>
 </template>
@@ -26,7 +39,6 @@ export default {
     data(){
         return{
             gameView:{},
-            ctx:{},
             gameBoard:{
                 width: 10,
                 height: 10
@@ -58,7 +70,7 @@ export default {
         },
         generateBombs(){
             const totalNodes = this.gameBoard.width * this.gameBoard.height;
-            const numberOfBombs = 35;
+            const numberOfBombs = Math.round((25 / totalNodes) * 100);
 
             var array = Array.from(Array(totalNodes).keys());
 
@@ -73,6 +85,13 @@ export default {
             min = Math.ceil(min);
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        checkNode(node){
+            if(node.isBomb === true){
+
+            }else{
+
+            }
         }
     }
 }
