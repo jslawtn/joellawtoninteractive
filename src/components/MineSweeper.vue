@@ -27,8 +27,9 @@
 
 <template>
     <div class="grid">
-        <div :class="{bomb: node.isBomb === true}" class="grid-item" v-for="(node, index) in nodes" :key="index">
+        <div :class="{bomb: node.isBomb === true}" class="grid-item" v-for="(node, index) in nodes" :key="index" v-on:click="checkNode(node)">
             {{node.x}}, {{node.y}}
+            <p v-if="node.active === true">{{node.bombCount}}</p>
         </div>
     </div>
 </template>
@@ -87,10 +88,23 @@ export default {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         checkNode(node){
-            if(node.isBomb === true){
-
+            if(node.isBomb){
+                // game over
             }else{
+                var bombCount = 0;
+                for(var positionX = node.x - 1; positionX <= node.x + 1; positionX++){
+                    for(var positionY = node.y - 1; positionY <= node.y + 1; positionY++){
+                        console.log(`${positionX}, ${positionY}`);
+                        var adjacentNode = this.nodes.find(x => x.x === positionX && x.y === positionY);
 
+                        if(adjacentNode && adjacentNode.isBomb){
+                            bombCount++;
+                        }
+                    }
+                }
+
+                node.bombCount = bombCount;
+                node.active = true;
             }
         }
     }
