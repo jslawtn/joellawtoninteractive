@@ -23,14 +23,25 @@
 .bomb{
     background-color: red;
 }
+
+.active{
+    background-color: lightgray;
+}
+
+.flagged{
+    background-color: lightseagreen;
+}
 </style>
 
 <template>
     <div>
         <div class="grid">
-            <div :class="{bomb: node.isBomb === true}" class="grid-item" v-for="(node, index) in nodes" :key="index" v-on:click="checkNode(node)">
-                {{node.x}}, {{node.y}}
-                <p v-if="node.active === true">{{node.bombCount}}</p>
+            <div :class="{bomb: node.isBomb === true && node.active === true, active: node.isBomb === false && node.active === true}" class="grid-item" v-for="(node, index) in nodes" :key="index" v-on:click="checkNode(node)">
+                <!-- {{node.x}}, {{node.y}} -->
+                <div v-if="node.active === true">
+                    <p v-if="node.bombCount > 0">{{node.bombCount}}</p>    
+                    <p v-else-if="node.isBomb === true">{{gameBoard.bombIcon}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -41,10 +52,28 @@ export default {
     name: 'mineSweeper',
     data(){
         return{
-            gameView:{},
             gameBoard:{
                 width: 10,
-                height: 10
+                height: 10,
+                bombIcon: '💣',
+                flagIcon: '🚩',
+                difficulties:{
+                    easy:{
+                        width: 10,
+                        height: 10,
+                        bombDistribution: 20
+                    },
+                    medium:{
+                        width: 15,
+                        height: 10,
+                        bombDistribution: 25
+                    },
+                    hard:{
+                        width: 20,
+                        height: 15,
+                        bombDistribution: 35
+                    }
+                }
             },
             nodes:[]
         }
@@ -92,6 +121,8 @@ export default {
         checkNode(node){
             if(node.isBomb){
                 // game over
+                node.active = true;
+                this.gameOver();
             }else{
                 var bombCount = 0;
                 for(var positionX = node.x - 1; positionX <= node.x + 1; positionX++){
@@ -107,6 +138,9 @@ export default {
                 node.bombCount = bombCount;
                 node.active = true;
             }
+        },
+        gameOver(){
+
         }
     }
 }
