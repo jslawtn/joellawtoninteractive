@@ -16,8 +16,7 @@
 .grid-item{
     width: 40px;
     height: 40px;
-    background-color: azure;
-    border: 1px solid #c3c3c3;
+    background-color: #a3a3a3
 }
 
 .bomb{
@@ -25,7 +24,7 @@
 }
 
 .active{
-    background-color: lightgray;
+    background-color: #e2e2e2;
 }
 
 .flagged{
@@ -42,16 +41,21 @@
                 <option :value="gameBoard.difficulties.hard">Hard</option>
             </select>
         </div>
-        <div class="grid">
-            <div :class="{bomb: node.isBomb === true && node.active === true, active: node.isBomb === false && node.active === true}" class="grid-item" v-for="(node, index) in nodes" :key="index" v-on:click="checkNode(node)">
-                <!-- {{node.x}}, {{node.y}} -->
+        <div class="grid" ref="game-board">
+
+            <div class="grid-item" v-for="(node, index) in nodes" v-on:click="checkNode(node)" @contextmenu="flagged(node)" 
+            :class="{ 
+                bomb: node.isBomb === true && node.active === true, 
+                active: node.isBomb === false && node.active === true && node.flagged === false,
+                flagged: node.flagged === true }" 
+            :key="index" >
                 <div v-if="node.active === true">
                     <p v-if="node.bombCount > 0">{{node.bombCount}}</p>    
                     <p v-else-if="node.isBomb === true">{{gameBoard.bombIcon}}</p>
+                    <p v-else-if="node.flagged === true">{{gameBoard.flagIcon}}</p>
                 </div>
             </div>
         </div>
-        <canvas id="gameBoard" width="560" height="560" style="border:2px solid #d3d3d3;"></canvas>
     </div>
 </template>
 
@@ -85,51 +89,23 @@ export default {
                     }
                 }
             },
+            nodeConfig:{
+                'width': '40px',
+                'height': '40px',
+                'backgroundColor': 'red'
+            },
             nodes:[]
         }
     },
     mounted: function(){
+        this.$refs['game-board'].addEventListener('contextmenu', event => event.preventDefault());
         this.gameBoard.currentDificulty = this.gameBoard.difficulties.easy;
-        
+
         this.createNodes(
             this.gameBoard.currentDificulty.width, 
             this.gameBoard.currentDificulty.height);
-
-        // NEW //
-        var c = document.getElementById("gameBoard");
-        var ctx = c.getContext("2d");
-
-        this.drawBoard(
-            this.gameBoard.currentDificulty.width,
-            this.gameBoard.currentDificulty.height,
-            ctx);
-        
-        // for(var i=0;i<8;i++){
-        //     for(var j=0;j<8;j++){
-        //         ctx.moveTo(0,70*j);
-        //         ctx.lineTo(560,70*j);
-        //         ctx.stroke();
-        
-        //         ctx.moveTo(70*i,0);
-        //         ctx.lineTo(70*i,560);
-        //         ctx.stroke();
-        //         var left = 0;
-        //         for(var a=0;a<8;a++) {
-        //             for(var b=0; b<8;b+=2) {
-        //                 var startX = b * 70;
-        //                 if(a%2==0){
-        //                     startX = (b+1) * 70;
-        //                 } 
-        //                 ctx.fillRect(startX + left,(a*70) ,70,70);
-        //             }
-        //         }
-        //     }
-        // }
     },
     methods:{
-        drawBoard(width, height, ctx){
-
-        },
         createNodes(width, height){
             for(var x = 0; x < width; x ++){
                 for(var y = 0; y < height; y++){
@@ -141,11 +117,9 @@ export default {
                         isBomb: false,
                         active: false
                     };
-
                     this.nodes.push(node);
                 }
             }
-
             this.generateBombs();
         },
         generateBombs(){
@@ -169,7 +143,6 @@ export default {
         },
         checkNode(node){
             if(node.isBomb){
-                // game over
                 node.active = true;
                 this.gameOver();
             }else{
@@ -188,7 +161,10 @@ export default {
                 node.active = true;
             }
         },
-        flagged(){
+        flagged(node){ 
+            node.flagged = !node.flagged;
+            node.active = !node.active;
+
             this.gameBoard.flaggedCount--;
         },
         gameOver(){
