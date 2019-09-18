@@ -11,8 +11,8 @@
 <template>
   <div id="app">
     <div class="container">
-      <!-- <TicTacToe></TicTacToe> -->
-      <MineSweeper></MineSweeper>
+      <TicTacToe></TicTacToe>
+      <!-- <MineSweeper></MineSweeper> -->
     </div>
   </div>
 </template>

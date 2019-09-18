@@ -60,7 +60,7 @@
             <div class="grid">
                 <button class="node btn-node" v-for="(node, index) in nodes" :key="index" v-on:click="playerSelect(node)"
                 :class="{'node-player node-active': node.playerId === -1, 'node-ai node-active': node.playerId === 1}"
-                :disabled="node.playerId !== 0 || gameComplete === true">
+                :disabled="node.playerId !== 0 || gameComplete === true || playerTurn === false">
                     <i :class="node.icon"></i>
                 </button>
             </div>
@@ -82,24 +82,27 @@ export default {
             },
             nodes:[],
             gameComplete: false,
-            victoryText: ''
+            victoryText: '',
+            playerTurn: true
         }
     },
     mounted: function(){
-        // Create Board
-        for(var x = 0; x < this.grid.horizontalNodes; x++){
-            for(var y = 0; y < this.grid.verticalNodes; y++){
-                const node = {
-                    x: x,
-                    y: y,
-                    playerId: 0,
-                    icon: ''
-                }
-                this.nodes.push(node);
-            }
-        }
+        this.createNodes();
     },
     methods:{
+        createNodes(){
+            for(var x = 0; x < this.grid.horizontalNodes; x++){
+                for(var y = 0; y < this.grid.verticalNodes; y++){
+                    const node = {
+                        x: x,
+                        y: y,
+                        playerId: 0,
+                        icon: ''
+                    }
+                    this.nodes.push(node);
+                }
+            }
+        },
         restartGame(){
             this.nodes.forEach(x => { x.playerId = 0; x.icon = ''; });
             this.gameComplete = false;
@@ -113,7 +116,8 @@ export default {
                 this.victoryText = "PLAYER WON";
                 this.gameComplete = true;
             }else{
-                this.aiSelect();
+                this.playerTurn = false;
+                setTimeout(() => this.aiSelect(), 500);
             }
         },
         aiSelect(){
@@ -131,6 +135,8 @@ export default {
                 this.victoryText = "DRAW";
                 this.gameComplete = true;
             }
+
+            this.playerTurn = true;
         },
         minMax(){
             for(var i = 0; i < this.nodes.length; i ++){

@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { randomRange } from '@/helpers/random';
 export default {
     name: 'mineSweeper',
     data(){
@@ -89,11 +90,6 @@ export default {
                     }
                 }
             },
-            nodeConfig:{
-                'width': '40px',
-                'height': '40px',
-                'backgroundColor': 'red'
-            },
             nodes:[]
         }
     },
@@ -115,7 +111,12 @@ export default {
                         bombCount: 0,
                         flagged: false,
                         isBomb: false,
-                        active: false
+                        active: false,
+                        nodeConfig:{
+                            'width': '40px',
+                            'height': '40px',
+                            'background-color':'#a3a3a3'
+                        }
                     };
                     this.nodes.push(node);
                 }
@@ -130,16 +131,11 @@ export default {
             var array = Array.from(Array(totalNodes).keys());
 
             for(var i = 0; i < numberOfBombs; i++){
-                const randomIndex = this.randomRange(0, array.length - 1);
+                const randomIndex = randomRange(0, array.length - 1);
                 
                 this.nodes[array[randomIndex]].isBomb = true;
                 array.splice(randomIndex, 1);
             }
-        },
-        randomRange(min, max){
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         checkNode(node){
             if(node.isBomb){
