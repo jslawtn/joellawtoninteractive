@@ -5,10 +5,37 @@ $tertiary-colour: #E07A5F;
 
 html, body{
     background-color: $primary-colour !important;
+
+    p, h1, h2, h3, h4, h5, h6{
+        color: $secondary-colour !important;
+    }
 }
 
-p, h1, h2, h3, h4, h5, h6{
-    color: $secondary-colour;
+.game-container{
+    position: relative;
+    max-width: 500px;
+    margin: auto;
+}
+
+.game-header{
+    min-height: 150px;
+    text-align: center;
+}  
+
+.grid-container{
+    margin: auto;
+    width:fit-content;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+}
+
+.t-colour{
+    color: $tertiary-colour;
 }
 
 .node{
@@ -20,6 +47,26 @@ p, h1, h2, h3, h4, h5, h6{
 .node-active{
     transform: rotateY(180deg);
 }
+
+.btn-node{
+    border: none;
+}
+
+.node{
+    width: 60px;
+    height: 60px;
+    background-color:cadetblue;
+    transition: 1s;
+}
+
+.node-player{
+    background-color:coral;
+}
+
+.node-ai{
+    background-color: cornflowerblue;
+}
+
 
 .trans-05{
     transition: 0.5s;

@@ -1,52 +1,8 @@
-<style scoped>
-.game-container{
-    position: relative;
-    max-width: 500px;
-    margin: auto;
-}
-
-.game-header{
-    min-height: 80px;
-    text-align: center;
-}  
-
-.grid-container{
-    margin: auto;
-    width:fit-content;
-}
-
-.grid{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
-}
-
-.btn-node{
-    border: none;
-}
-
-.node{
-    width: 60px;
-    height: 60px;
-    background-color:cadetblue;
-    transition: 1s;
-}
-
-.node-player{
-    background-color:coral;
-}
-
-.node-ai{
-    background-color: cornflowerblue;
-}
-
-</style>
-
 <template>
     <div class="game-container">
         <div class="game-header">
-            <h3>Vuejs tic-tac-toe</h3>
+            <h1>Noughts & Crosses</h1>
+            <span class="t-colour">Welcome to Noughts & Crosses in Vuejs</span>
             <h6 v-if="gameComplete === true">{{victoryText}}</h6>
         </div>
         <div class="grid-container">
@@ -59,7 +15,7 @@
             </div>
         </div>
         <div class="grid-container" v-if="gameComplete === true">
-            <button class="btn" v-on:click="restartGame()">Restart</button>
+            <button class="btn t-colour" v-on:click="restartGame()">Restart</button>
         </div>
     </div>
 </template>
