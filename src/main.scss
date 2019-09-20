@@ -1,0 +1,43 @@
+// Colour Palette
+$primary-colour: #3D405B;
+$secondary-colour: #F4F1DE;
+$tertiary-colour: #E07A5F;
+
+html, body{
+    background-color: $primary-colour !important;
+}
+
+p, h1, h2, h3, h4, h5, h6{
+    color: $secondary-colour;
+}
+
+.node{
+    i{
+        color: $secondary-colour;
+    }
+}
+
+.node-active{
+    transform: rotateY(180deg);
+}
+
+.trans-05{
+    transition: 0.5s;
+}
+
+.trans-1{
+    transition: 1s;
+}
+
+/* Bootstrap Component */
+.popover{
+    color: white;
+    background-color: #68e7ec;
+    border-radius: 0;
+    border: none;
+}
+
+.arrow{
+    display: none;
+    visibility: hidden;
+}

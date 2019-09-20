@@ -33,14 +33,6 @@
     transition: 1s;
 }
 
-.node i{
-    color: white;
-}
-
-.node-active{
-    transform: rotateY(180deg);
-}
-
 .node-player{
     background-color:coral;
 }
@@ -48,12 +40,13 @@
 .node-ai{
     background-color: cornflowerblue;
 }
+
 </style>
 
 <template>
     <div class="game-container">
         <div class="game-header">
-            <h3>Tic Tac Toe</h3>
+            <h3>Vuejs tic-tac-toe</h3>
             <h6 v-if="gameComplete === true">{{victoryText}}</h6>
         </div>
         <div class="grid-container">
