@@ -2,6 +2,7 @@
 $primary-colour: #3D405B;
 $secondary-colour: #F4F1DE;
 $tertiary-colour: #E07A5F;
+$quaternary-colour: #6495ED;
 
 html, body{
     background-color: $primary-colour !important;
@@ -64,9 +65,8 @@ html, body{
 }
 
 .node-ai{
-    background-color: cornflowerblue;
+    background-color: $quaternary-colour;
 }
-
 
 .trans-05{
     transition: 0.5s;
