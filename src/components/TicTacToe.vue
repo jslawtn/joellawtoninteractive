@@ -17,6 +17,17 @@
         <div class="grid-container" v-if="gameComplete === true">
             <button class="btn t-colour" v-on:click="restartGame()">Restart</button>
         </div>
+        <ul class="d-flex justify-content-around">
+            <li>
+                <p>Player - {{playerWins}}</p>
+            </li>
+            <li>
+                <p>Draw - {{draws}}</p>
+            </li>
+            <li>
+                <p>CPU - {{cpuWins}}</p>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -32,7 +43,10 @@ export default {
             nodes:[],
             gameComplete: false,
             victoryText: '',
-            playerTurn: true
+            playerTurn: true,
+            playerWins: 0,
+            draws: 0,
+            cpuWins: 0
         }
     },
     mounted: function(){
@@ -64,6 +78,7 @@ export default {
             if(this.checkGrid(selectedNode, this.nodes) === true){
                 this.victoryText = "PLAYER WON";
                 this.gameComplete = true;
+                this.playerWins ++;
             }else{
                 this.playerTurn = false;
                 setTimeout(() => this.aiSelect(), 500);
@@ -78,11 +93,13 @@ export default {
                 if(this.checkGrid(node, this.nodes) === true){
                     this.victoryText = "COMPUTER WON";
                     this.gameComplete = true;
+                    this.cpuWins ++;
                 }
             }
             else{
                 this.victoryText = "DRAW";
                 this.gameComplete = true;
+                this.draws ++;
             }
 
             this.playerTurn = true;
